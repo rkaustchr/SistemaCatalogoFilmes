@@ -1,0 +1,19 @@
+To do list:
+
+• A criação de novos usúarios. Um novo usúario deve apresentar um nome, idade, genero, ocupação e CEP informados por uma tela;
+
+• Alteração dos seguintes dados dos usúarios: Ocupação, CEP e idade;
+
+• Remoção de um usúario que ainda não assistiu ou avaliou um filme;
+
+• Usúario poder incluir e/ou modificar a nota de um filme;
+
+• Usúario poder ver a lista de filmes que já assitiu;
+
+• O sistema deve exibir a lista de filmes sugeridos ao usúario;
+
+• O sistema deve possuir uma tela para exibir os filmes e seus detalhes, assim como os usúarios que já assitiram este filme;
+
+• Por fim, o sistema deve exibir uma tela com os filmes mais bem votados por todos os usúarios.
+
+• BONUS: Obter e apresentar as imagens dos filmes no site do IMDB.

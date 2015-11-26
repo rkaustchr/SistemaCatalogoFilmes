@@ -10,5 +10,5 @@ package classes;
  * @author Admin
  */
 public class Usuario {
-    
+    // nome, idade, genero, ocupação e CEP
 }
