@@ -5,10 +5,39 @@
  */
 package classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public class Usuario {
-    // nome, idade, genero, ocupação e CEP
+    private String nome;
+    private int idade;
+    private String genero;
+    private String ocupacao;
+    private String cep;
+    
+    private ArrayList<Nota> notas;
+    
+    public Usuario(String nome, int idade, String genero, String ocupacao, String cep ) {
+        this.nome = nome;
+        this.idade = idade;
+        this.genero = genero;
+        this.ocupacao = ocupacao;
+        this.cep = cep;
+    }
+    
+    public void alterarOcupacao( String novaOcupacao ) {
+        this.ocupacao = novaOcupacao;
+    }
+    
+    public void alterarCep( String novoCep ) {
+        this.cep = novoCep;
+    }
+    
+    public void alterarIdade( int novaIdade ) {
+        this.idade = novaIdade;
+    }
+    
 }
