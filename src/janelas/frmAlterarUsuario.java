@@ -20,12 +20,21 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
     public frmAlterarUsuario() {
         initComponents();
         
-        String s = (String)JOptionPane.showInputDialog(
-                        new JFrame(),
-                        "Informe o nome do usuário que deseja alterar",
-                        "Alteração de usuário",
-                        JOptionPane.QUESTION_MESSAGE
-                        );
+        String nome;
+        
+        nome = (String)JOptionPane.showInputDialog(
+                    new JFrame(),
+                    "Informe o nome do usuário que deseja alterar",
+                    "Alteração de usuário",
+                    JOptionPane.QUESTION_MESSAGE
+                );
+        
+        if ( nome == "" )
+            this.dispose();
+        
+        
+        
+        
     }
 
     /**
