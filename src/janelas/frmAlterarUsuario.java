@@ -5,15 +5,18 @@
  */
 package janelas;
 
+import classes.Usuario;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import sistemacatalogofilmes.SistemaCatalogoFilmes;
 
 /**
  *
  * @author rk
  */
 public class frmAlterarUsuario extends javax.swing.JFrame {
-
+    private int indice;
     /**
      * Creates new form frmAlterarUsuario
      */
@@ -32,8 +35,29 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
         if ( nome == "" )
             this.dispose();
         
+        // Procurar o usuário
+        int total = SistemaCatalogoFilmes.usuarios.size();
+        indice = -1;
+        int i;
         
+        for( i=0; i < total; i++ ) {
+            if ( SistemaCatalogoFilmes.usuarios.get(i).getNome().equals( nome ) ) {
+                indice = i;
+                break;
+            }
+        }
         
+        if ( indice == -1 ) {
+            JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
+            this.dispose();
+        }
+        
+        Usuario usuario = SistemaCatalogoFilmes.usuarios.get(indice);
+        txtNome.setText(usuario.getNome());
+        txtIdade.setText(String.valueOf( usuario.getIdade() ));
+        cmbGenero.setSelectedItem(usuario.getGenero());
+        txtOcupacao.setText(usuario.getOcupacao());
+        txtCep.setText(usuario.getCep());
         
     }
 
@@ -58,7 +82,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
         txtIdade = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
         cmbGenero.setEnabled(false);
@@ -156,23 +180,13 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-        SistemaCatalogoFilmes.usuarios.add(
-            new Usuario(
-                txtNome.getText(),
-                Integer.parseInt( txtIdade.getText() ),
-                String.valueOf(cmbGenero.getSelectedItem()),
-                txtOcupacao.getText(),
-                txtCep.getText()
-            )
-        );
-        // JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
 
-        JOptionPane.showMessageDialog(new JFrame(), "Usuário cadastrado com sucesso!", "Mensagem",
-            JOptionPane.INFORMATION_MESSAGE);
-
-        this.dispose();
-        */
+        SistemaCatalogoFilmes.usuarios.get(indice).alterarCep(txtCep.getText());
+        SistemaCatalogoFilmes.usuarios.get(indice).alterarIdade(Integer.parseInt( txtIdade.getText() ));
+        SistemaCatalogoFilmes.usuarios.get(indice).alterarOcupacao(txtOcupacao.getText());
+        
+        JOptionPane.showMessageDialog(this, "Usuário alterado com sucesso!");
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdadeActionPerformed

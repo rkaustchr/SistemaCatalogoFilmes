@@ -40,4 +40,24 @@ public class Usuario {
         this.idade = novaIdade;
     }
     
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public int getIdade() {
+        return this.idade;
+    }
+    
+    public String getGenero() {
+        return this.genero;
+    }
+    
+    public String getOcupacao() {
+        return this.ocupacao;
+    }
+    
+    public String getCep() {
+        return this.cep;
+    }
+    
 }
