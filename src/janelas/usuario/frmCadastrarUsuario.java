@@ -3,62 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package janelas;
+package janelas.usuario;
 
 import classes.Usuario;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import sistemacatalogofilmes.SistemaCatalogoFilmes;
 
 /**
  *
  * @author rk
  */
-public class frmAlterarUsuario extends javax.swing.JFrame {
-    private int indice;
+public class frmCadastrarUsuario extends javax.swing.JFrame {
+
     /**
-     * Creates new form frmAlterarUsuario
+     * Creates new form frmCadastrarUsuario
      */
-    public frmAlterarUsuario() {
+    public frmCadastrarUsuario() {
         initComponents();
-        
-        String nome;
-        
-        nome = (String)JOptionPane.showInputDialog(
-                    new JFrame(),
-                    "Informe o nome do usuário que deseja alterar",
-                    "Alteração de usuário",
-                    JOptionPane.QUESTION_MESSAGE
-                );
-        
-        if ( nome == "" )
-            this.dispose();
-        
-        // Procurar o usuário
-        int total = SistemaCatalogoFilmes.usuarios.size();
-        indice = -1;
-        int i;
-        
-        for( i=0; i < total; i++ ) {
-            if ( SistemaCatalogoFilmes.usuarios.get(i).getNome().equals( nome ) ) {
-                indice = i;
-                break;
-            }
-        }
-        
-        if ( indice == -1 ) {
-            JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
-            this.dispose();
-        }
-        
-        Usuario usuario = SistemaCatalogoFilmes.usuarios.get(indice);
-        txtNome.setText(usuario.getNome());
-        txtIdade.setText(String.valueOf( usuario.getIdade() ));
-        cmbGenero.setSelectedItem(usuario.getGenero());
-        txtOcupacao.setText(usuario.getOcupacao());
-        txtCep.setText(usuario.getCep());
-        
     }
 
     /**
@@ -70,31 +32,21 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtOcupacao = new javax.swing.JTextField();
-        txtCep = new javax.swing.JTextField();
-        cmbGenero = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtIdade = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
+        txtOcupacao = new javax.swing.JTextField();
+        txtCep = new javax.swing.JTextField();
+        cmbGenero = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
-        cmbGenero.setEnabled(false);
-
         jLabel1.setText("Nome");
-
-        jButton1.setText("Alterar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Gênero");
 
@@ -110,11 +62,18 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
             }
         });
 
-        txtNome.setEditable(false);
-        txtNome.setEnabled(false);
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
+            }
+        });
+
+        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
+
+        jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -146,7 +105,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(215, 215, 215)
                 .addComponent(jButton1)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,21 +132,11 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        SistemaCatalogoFilmes.usuarios.get(indice).alterarCep(txtCep.getText());
-        SistemaCatalogoFilmes.usuarios.get(indice).alterarIdade(Integer.parseInt( txtIdade.getText() ));
-        SistemaCatalogoFilmes.usuarios.get(indice).alterarOcupacao(txtOcupacao.getText());
-        
-        JOptionPane.showMessageDialog(this, "Usuário alterado com sucesso!");
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIdadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdadeActionPerformed
         // TODO add your handling code here:
@@ -196,6 +145,24 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        SistemaCatalogoFilmes.usuarios.add( 
+                new Usuario(
+                        txtNome.getText(), 
+                        Integer.parseInt( txtIdade.getText() ), 
+                        String.valueOf(cmbGenero.getSelectedItem()),
+                        txtOcupacao.getText(),
+                        txtCep.getText()
+                )
+        );
+        // JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+        
+        JOptionPane.showMessageDialog(new JFrame(), "Usuário cadastrado com sucesso!", "Mensagem",
+        JOptionPane.INFORMATION_MESSAGE);
+        
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,20 +181,20 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAlterarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmCadastrarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAlterarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmCadastrarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAlterarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmCadastrarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAlterarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmCadastrarUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAlterarUsuario().setVisible(true);
+                new frmCadastrarUsuario().setVisible(true);
             }
         });
     }

@@ -28,4 +28,29 @@ public class Filme {
         this.categorias = categorias;
     }
     
+    public int getCodigo() {
+        return this.codigo;
+    }
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public String getDataLacamento() {
+        return this.dataLancamento;
+    }
+    
+    public String getDataDvd() {
+        return this.dataDvd;
+    }
+    
+    public String getUrl() {
+        return this.url;
+    }
+    
+    public ArrayList<Categoria> getCategorias() {
+        return this.categorias;
+    }
+    
+    
 }

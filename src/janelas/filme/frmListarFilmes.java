@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package janelas;
+package janelas.filme;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import sistemacatalogofilmes.SistemaCatalogoFilmes;
 /**
  *
  * @author Admin
  */
-public class frmListarUsuarios extends javax.swing.JFrame {
+public class frmListarFilmes extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmListarUsuarios
+     * Creates new form frmListarFilmes
      */
-    public frmListarUsuarios() {
+    public frmListarFilmes() {
         initComponents();
     }
 
@@ -31,7 +29,7 @@ public class frmListarUsuarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblUsuarios = new javax.swing.JTable();
+        tblFilmes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -40,7 +38,7 @@ public class frmListarUsuarios extends javax.swing.JFrame {
             }
         });
 
-        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,21 +49,21 @@ public class frmListarUsuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblUsuarios);
+        jScrollPane1.setViewportView(tblFilmes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 25, Short.MAX_VALUE))
         );
 
@@ -74,30 +72,25 @@ public class frmListarUsuarios extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        String colunas[] = { "Nome", "Idade", "Genero", "Ocupação" };
+        String colunas[] = { "Código", "Nome", "Lançamento", "DVD", "URL" };
         String dados[][];
         
-        int linhas = sistemacatalogofilmes.SistemaCatalogoFilmes.usuarios.size();
-        dados = new String[linhas][4];
+        int linhas = SistemaCatalogoFilmes.filmes.size();
+        dados = new String[linhas][colunas.length];
         int i;
         
         for (i=0; i < linhas; i++ ) {
-            dados[i][0] = SistemaCatalogoFilmes.usuarios.get(i).getNome();
-            dados[i][1] = String.valueOf(SistemaCatalogoFilmes.usuarios.get(i).getIdade());
-            dados[i][2] = SistemaCatalogoFilmes.usuarios.get(i).getGenero();
-            dados[i][3] = SistemaCatalogoFilmes.usuarios.get(i).getOcupacao();
+            dados[i][0] = String.valueOf( SistemaCatalogoFilmes.filmes.get(i).getCodigo() );
+            dados[i][1] = SistemaCatalogoFilmes.filmes.get(i).getNome();
+            dados[i][2] = SistemaCatalogoFilmes.filmes.get(i).getDataLacamento();
+            dados[i][3] = SistemaCatalogoFilmes.filmes.get(i).getDataDvd();
+            dados[i][4] = SistemaCatalogoFilmes.filmes.get(i).getUrl();
         } 
         
-        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+        tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
             dados,
             colunas
         ));
-        //JTable tabela = new JTable(dados, colunas);
-        
-        //JScrollPane scrollPane = new JScrollPane(tabela);
-        //tabela.setFillsViewportHeight(true);
-        
-        //this.add(scrollPane);
     }//GEN-LAST:event_formWindowActivated
 
     /**
@@ -117,26 +110,26 @@ public class frmListarUsuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmListarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarFilmes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmListarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarFilmes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmListarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarFilmes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmListarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarFilmes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmListarUsuarios().setVisible(true);
+                new frmListarFilmes().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTable tblFilmes;
     // End of variables declaration//GEN-END:variables
 }

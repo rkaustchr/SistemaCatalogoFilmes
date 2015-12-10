@@ -5,6 +5,13 @@
  */
 package janelas;
 
+import janelas.filme.frmCadastarFilme;
+import janelas.filme.frmListarFilmes;
+import janelas.filme.frmVerFilme;
+import janelas.usuario.frmAlterarUsuario;
+import janelas.usuario.frmCadastrarUsuario;
+import janelas.usuario.frmListarUsuarios;
+import janelas.usuario.frmVerUsuario;
 import javafx.application.Application;
 import javax.swing.JFrame;
 
@@ -103,12 +110,27 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("Filmes");
 
         jMenuItem7.setText("Adicionar Filme");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuItem8.setText("Ver Filme");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Listar Filmes");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -151,12 +173,28 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        JFrame frmVerUsuario = new frmVerUsuario();
+        frmVerUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        JFrame frmCadastrarFilme = new frmCadastarFilme();
+        frmCadastrarFilme.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        JFrame frmListarFilmes = new frmListarFilmes();
+        frmListarFilmes.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        JFrame frmVerFilme = new frmVerFilme();
+        frmVerFilme.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments

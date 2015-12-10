@@ -17,4 +17,12 @@ public class Categoria {
         this.codigo = codigo;
         this.nome = nome;
     }
+    
+    public String getNome() {
+        return this.nome;
+    }
+    
+    public int getCodigo() {
+        return this.codigo;
+    }
 }

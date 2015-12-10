@@ -31,6 +31,15 @@ public class SistemaCatalogoFilmes {
         
         // Carregando os dados do "banco"
         
+        // Carregando Categorias
+        categorias.add(new Categoria(1, "Ação"));
+        categorias.add(new Categoria(2, "Suspense"));
+        categorias.add(new Categoria(3, "Aventura"));
+        categorias.add(new Categoria(4, "Comédia"));
+        categorias.add(new Categoria(5, "Romance"));
+        categorias.add(new Categoria(6, "Drama"));
+        categorias.add(new Categoria(7, "Ficção Científica"));
+        categorias.add(new Categoria(8, "Pornô"));
         
         
         // 
