@@ -6,6 +6,8 @@
 package janelas.filme;
 
 import classes.Filme;
+import classes.Usuario;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,6 +20,8 @@ import   sistemacatalogofilmes.SistemaCatalogoFilmes;
 public class frmVerFilme extends javax.swing.JFrame {
 
     private int indice;
+    private boolean avaliado;
+    private Filme filme;
     
     /**
      * Creates new form frmVerFilme
@@ -40,7 +44,7 @@ public class frmVerFilme extends javax.swing.JFrame {
             return;
         }
         
-        // Procurar o usuário
+        // Procurar o filme
         int total = SistemaCatalogoFilmes.filmes.size();
         indice = -1;
         int i;
@@ -65,7 +69,8 @@ public class frmVerFilme extends javax.swing.JFrame {
             return;
         }
         
-        Filme filme = SistemaCatalogoFilmes.filmes.get(indice);
+        // Carrega dados do Filme para tela
+        filme = SistemaCatalogoFilmes.filmes.get(indice);
         lblCodigo.setText( String.valueOf( filme.getCodigo() ));
         lblNome.setText(filme.getNome());
         lblDataLancamento.setText(filme.getDataLacamento());
@@ -74,8 +79,49 @@ public class frmVerFilme extends javax.swing.JFrame {
         
         lblCategorias.setText("");
         for ( i=0; i < filme.getCategorias().size(); i++) {
-            lblCategorias.setText(lblCategorias.getText() + "   " + filme.getCategorias().get(i).getNome());
+            lblCategorias.setText(lblCategorias.getText() + filme.getCategorias().get(i).getNome()  + "   ");
         }
+        
+        // Verifica se o usuário logado já avaliou o filme exibido
+        if ( SistemaCatalogoFilmes.usuarioLogado != null ) {
+            if ( SistemaCatalogoFilmes.usuarioLogado.jaAssistiu(filme) != null ) {
+                btnAvaliacao.setText("Alterar nota!");
+                avaliado = true;
+            } else {
+                btnAvaliacao.setText("Avaliar!");
+                avaliado = false;
+            }
+        }
+        
+        atualizarTabela();
+        
+    }
+    
+    /**
+    *    Carrega os usuários que já assistiram para a tabela
+    */
+    private void atualizarTabela() {
+        String colunas[] = { "Nome", "Nota" };
+        String dados[][];
+        ArrayList<Usuario> temp = new ArrayList<>();
+        int i;
+        
+        for (i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.usuarios.get(i).jaAssistiu(filme) != null ) {
+                temp.add(SistemaCatalogoFilmes.usuarios.get(i));
+            }             
+        }
+        
+        dados = new String[temp.size()][colunas.length];
+        for (i=0; i < temp.size(); i++ ) {
+            dados[i][0] = temp.get(i).getNome();
+            dados[i][1] = String.valueOf( temp.get(i).jaAssistiu(filme).getNota() );
+        }
+            
+        tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
+            dados,
+            colunas
+        ));
     }
 
     /**
@@ -87,6 +133,8 @@ public class frmVerFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -99,6 +147,23 @@ public class frmVerFilme extends javax.swing.JFrame {
         lblDataDvd = new javax.swing.JLabel();
         lblUrl = new javax.swing.JLabel();
         lblCategorias = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblEspectadores = new javax.swing.JTable();
+        btnAvaliacao = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -131,40 +196,76 @@ public class frmVerFilme extends javax.swing.JFrame {
 
         lblCategorias.setText("__CA, te, go, ri, as__");
 
+        jLabel7.setText("Já assistiram esse filme:");
+
+        tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblEspectadores);
+
+        btnAvaliacao.setText("Avaliar!");
+        btnAvaliacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvaliacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCodigo)
-                    .addComponent(lblNome)
-                    .addComponent(lblDataLancamento)
-                    .addComponent(lblDataDvd)
-                    .addComponent(lblUrl)
-                    .addComponent(lblCategorias))
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDataLancamento)
+                            .addComponent(lblDataDvd)
+                            .addComponent(lblUrl)
+                            .addComponent(lblCategorias)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCodigo)
+                                    .addComponent(lblNome))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAvaliacao)
+                                .addGap(8, 8, 8))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblCodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblNome))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblCodigo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblNome)))
+                    .addComponent(btnAvaliacao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -181,16 +282,48 @@ public class frmVerFilme extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblCategorias))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(566, 338));
+        setSize(new java.awt.Dimension(635, 374));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
+
+    private void btnAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaliacaoActionPerformed
+        if ( SistemaCatalogoFilmes.usuarioLogado == null ) {
+            JOptionPane.showMessageDialog(this, "Faça o login para avaliar este filme!");
+            return;
+        }
+        
+        String nota = (String)JOptionPane.showInputDialog(
+                    new JFrame(),
+                    "Informe a nota [ de 1 a 5 ]",
+                    "Avaliação de filme",
+                    JOptionPane.QUESTION_MESSAGE
+                );
+        
+        if ( nota == "" ) {
+            this.dispose();
+            return;
+        }
+        
+        if ( nota.isEmpty() || !nota.matches("[1-5]{"+nota.length()+"}") ) {
+            JOptionPane.showMessageDialog(new JFrame(), "Preencha com uma nota válida!", "Mensagem", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        SistemaCatalogoFilmes.usuarioLogado.avaliarFilme(filme, Integer.parseInt(nota));
+        
+        atualizarTabela();
+    }//GEN-LAST:event_btnAvaliacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,17 +361,23 @@ public class frmVerFilme extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAvaliacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCategorias;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDataDvd;
     private javax.swing.JLabel lblDataLancamento;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblUrl;
+    private javax.swing.JTable tblEspectadores;
     // End of variables declaration//GEN-END:variables
 }

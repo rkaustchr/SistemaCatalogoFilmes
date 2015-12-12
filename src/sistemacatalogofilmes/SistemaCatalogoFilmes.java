@@ -21,6 +21,8 @@ public class SistemaCatalogoFilmes {
     public static ArrayList<Filme> filmes;
     public static ArrayList<Categoria> categorias;
     
+    public static Usuario usuarioLogado;
+    
     /**
      * @param args the command line arguments
      */
@@ -28,6 +30,8 @@ public class SistemaCatalogoFilmes {
         usuarios = new ArrayList<Usuario>();
         filmes = new ArrayList<Filme>();
         categorias = new ArrayList<Categoria>();
+        
+        usuarioLogado = null;
         
         // Carregando os dados do "banco"
         
@@ -40,9 +44,6 @@ public class SistemaCatalogoFilmes {
         categorias.add(new Categoria(6, "Drama"));
         categorias.add(new Categoria(7, "Ficção Científica"));
         categorias.add(new Categoria(8, "Pornô"));
-        
-        
-        // 
         
         
         // TODO code application logic here

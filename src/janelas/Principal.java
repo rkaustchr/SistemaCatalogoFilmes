@@ -5,15 +5,19 @@
  */
 package janelas;
 
+import classes.Usuario;
 import janelas.filme.frmCadastarFilme;
 import janelas.filme.frmListarFilmes;
 import janelas.filme.frmVerFilme;
+import janelas.sistema.frmMeusFilmes;
 import janelas.usuario.frmAlterarUsuario;
 import janelas.usuario.frmCadastrarUsuario;
 import janelas.usuario.frmListarUsuarios;
 import janelas.usuario.frmVerUsuario;
 import javafx.application.Application;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import sistemacatalogofilmes.SistemaCatalogoFilmes;
 
 /**
  *
@@ -38,9 +42,16 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblUsuarioLogado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -53,10 +64,33 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0)");
 
         jLabel1.setText("Bem Vindo ao Sistema Recomendador de Filmes!");
 
-        jMenu1.setText("Arquivo");
+        jLabel2.setText("Usuário Logado:");
+
+        lblUsuarioLogado.setText("----");
+
+        jMenu1.setText("Sistema");
+
+        jMenuItem10.setText("Fazer login");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem10);
+        jMenu1.add(jSeparator1);
+
+        jMenuItem11.setText("Listar minhas avaliações");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
+        jMenu1.add(jSeparator2);
 
         jMenuItem1.setText("Sair");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +99,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem12.setText("jMenuItem12");
+        jMenu1.add(jMenuItem12);
 
         jMenuBar1.add(jMenu1);
 
@@ -103,6 +140,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Remover Usuários ");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -142,16 +184,27 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(jLabel1)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblUsuarioLogado)))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblUsuarioLogado))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(416, 338));
@@ -197,6 +250,63 @@ public class Principal extends javax.swing.JFrame {
         frmVerFilme.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        String nome;
+        int i;
+        
+        nome = (String)JOptionPane.showInputDialog(
+                    new JFrame(),
+                    "Informe o nome do usuaário que deseja fazer login",
+                    "Login",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+        
+        if ( nome == "" ) {
+            this.dispose();
+            return;
+        }
+        
+        for( i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.usuarios.get(i).getNome().equals( nome ) ) {
+                SistemaCatalogoFilmes.usuarioLogado = SistemaCatalogoFilmes.usuarios.get(i);
+                
+                lblUsuarioLogado.setText(SistemaCatalogoFilmes.usuarios.get(i).getNome());
+                
+                JOptionPane.showMessageDialog(this, "Login feito com sucesso");
+                return;                
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Usuário não encontrado, tente novamente!");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        
+        if ( JOptionPane.showConfirmDialog(this, "Deseja realmente remover os usuários que não fizeram avaliações?") != JOptionPane.YES_OPTION  ) {
+            return;
+        }
+        
+        int i;
+        int cont = 0;
+        for( i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.usuarios.get(i).getTotalDeAvaliacoes() == 0 ) {
+                Usuario u = SistemaCatalogoFilmes.usuarios.remove(i);
+                i--;
+                
+                if ( u.equals(SistemaCatalogoFilmes.usuarioLogado) ) {
+                    SistemaCatalogoFilmes.usuarioLogado = null;
+                }
+                cont++;
+            }
+        }
+        
+        JOptionPane.showMessageDialog(this, "Usuários removidos [ "+ cont +" ]");
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        JFrame frmMeusFilmes = new frmMeusFilmes();
+        frmMeusFilmes.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,11 +344,15 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -247,5 +361,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JLabel lblUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 }

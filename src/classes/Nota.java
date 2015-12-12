@@ -22,4 +22,12 @@ public class Nota {
         this.nota = novaNota;
     }
     
+    public Filme getFilme() {
+        return this.filme;
+    }
+    
+    public int getNota() {
+        return this.nota;
+    }
+    
 }
