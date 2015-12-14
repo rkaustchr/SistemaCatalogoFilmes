@@ -6,8 +6,6 @@
 package janelas.filme;
 
 import classes.Filme;
-import classes.Nota;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import sistemacatalogofilmes.SistemaCatalogoFilmes;
@@ -25,27 +23,82 @@ public class frmMelhoresFilmes extends javax.swing.JFrame {
         initComponents();
         
         // Com a capacidade inicial ajustada para não precisar realocar elementos
-        HashMap<Filme, ArrayList<Nota>> hmFilmes = new HashMap<>(SistemaCatalogoFilmes.filmes.size() + 10, 1);
+        HashMap<Filme, Integer[]> hmFilmes = new HashMap<>(SistemaCatalogoFilmes.filmes.size() + 10, 1);
+        int i;
         
-        ArrayList<Nota> notas;
-        int i, j;
-        for ( i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
-            for ( j=0; j < SistemaCatalogoFilmes.usuarios.get(i).getTotalDeAvaliacoes(); j++ ) {
-                notas = hmFilmes.get( SistemaCatalogoFilmes.usuarios.get(i).getNotas().get(j).getFilme() );
-                // Se ainda não existe no HashMap, Adiciona o filme
-                if ( notas == null ) {
-                    notas = new ArrayList<>();
-                } 
-                notas.add( SistemaCatalogoFilmes.usuarios.get(i).getNotas().get(j) );
-                hmFilmes.put(SistemaCatalogoFilmes.usuarios.get(i).getNotas().get(j).getFilme(), notas);
+        // Acumula todas as notas
+        for ( i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            Integer[] nota;
+            // Filme ainda não foi adicionado, cria o vetor de notas
+            if ( !hmFilmes.containsKey( SistemaCatalogoFilmes.bancoNotas.get(i).getFilme() ) ) {
+                nota = new Integer[2];
+                nota[0] = 0; // Quantidade de notas
+                nota[1] = 0; // Soma das notas
+                
+                hmFilmes.put(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme(), nota);
             }
+            
+            nota = hmFilmes.get(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme());
+            nota[0] += 1;
+            nota[1] += SistemaCatalogoFilmes.bancoNotas.get(i).getNota();
+            
+            hmFilmes.replace(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme(), nota);
+        }
+            
+        // Calcula as médias e separo os melhores avaliados
+        int MAX_MELHORES = 10;
+        String[][] melhoresFilmes = new String[MAX_MELHORES][2];
+        int cont = -1;
+        for ( i=0; i < SistemaCatalogoFilmes.filmes.size(); i++ ) {
+            Integer[] notas = hmFilmes.get(SistemaCatalogoFilmes.filmes.get(i)); 
+            float media;
+            
+            if ( notas == null )
+                continue;
+            
+            media = notas[1]/ (float)notas[0];
+            
+            if ( cont < 0 ) {
+                melhoresFilmes[0][0] = SistemaCatalogoFilmes.filmes.get(i).getNome();
+                melhoresFilmes[0][1] = String.valueOf(media);
+                cont = 0;
+            } else if ( cont+1 < MAX_MELHORES )  {
+                cont++;
+                melhoresFilmes[cont][0] = SistemaCatalogoFilmes.filmes.get(i).getNome();
+                melhoresFilmes[cont][1] = String.valueOf(media);
+            } else {
+                if ( media > Float.parseFloat( melhoresFilmes[cont][1] ) ) {
+                    melhoresFilmes[cont][0] = SistemaCatalogoFilmes.filmes.get(i).getNome();
+                    melhoresFilmes[cont][1] = String.valueOf(media);
+                }
+            }
+            
+            // Insertion Sort,
+            int j;
+            for ( j = cont; j > 0; j-- ) {
+                if ( Float.parseFloat( melhoresFilmes[j][1] ) >  Float.parseFloat( melhoresFilmes[j-1][1] )  ) {
+                    String aux;
+                    
+                    // Nomes
+                    aux = melhoresFilmes[j][0];
+                    melhoresFilmes[j][0] = melhoresFilmes[j-1][0];
+                    melhoresFilmes[j-1][0] = aux;
+                    
+                    // Medias
+                    aux = melhoresFilmes[j][1];
+                    melhoresFilmes[j][1] = melhoresFilmes[j-1][1];
+                    melhoresFilmes[j-1][1] = aux;
+                }
+            }
+            
         }
         
-        // já temos todos os filmes com suas notas
-        // agora calculamos a media e ordenamos
-        int num_filmes = 10;
-        ArrayList<Filme> melhores_filme= new ArrayList<>();
-        float medias[] = new float[num_filmes];
+        String colunas[] = { "Filme", "Média" };
+                    
+        tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            melhoresFilmes,
+            colunas
+        ));
         
         
     }
@@ -94,7 +147,8 @@ public class frmMelhoresFilmes extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(416, 338));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

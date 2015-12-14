@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/Principal.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/frmAlterarUsuario.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/classes/Usuario.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/sistema/frmMeusFilmes.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/sistemacatalogofilmes/SistemaCatalogoFilmes.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/frmListarUsuarios.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/frmCadastrarUsuario.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/filme/frmMelhoresFilmes.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/classes/Nota.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SistemaCatalogoFilmes/src/janelas/filme/frmVerFilme.java</file>
         </group>
     </open-files>
 </project-private>

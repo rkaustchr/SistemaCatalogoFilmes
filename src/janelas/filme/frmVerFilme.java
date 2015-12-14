@@ -6,7 +6,7 @@
 package janelas.filme;
 
 import classes.Filme;
-import classes.Usuario;
+import classes.Nota;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,79 +22,13 @@ public class frmVerFilme extends javax.swing.JFrame {
     private int indice;
     private boolean avaliado;
     private Filme filme;
+    private Nota nota;
     
     /**
      * Creates new form frmVerFilme
      */
     public frmVerFilme() {
         initComponents();
-        
-        String codigo;
-        int cod;
-        
-        codigo = (String)JOptionPane.showInputDialog(
-                    new JFrame(),
-                    "Informe o código do filme que deseja ver",
-                    "Exibição de filme",
-                    JOptionPane.QUESTION_MESSAGE
-                );
-        
-        if ( codigo == "" ) {
-            this.dispose();
-            return;
-        }
-        
-        // Procurar o filme
-        int total = SistemaCatalogoFilmes.filmes.size();
-        indice = -1;
-        int i;
-        
-        if ( codigo.isEmpty() || !codigo.matches("[0-9]{"+codigo.length()+"}") ) {
-            JOptionPane.showMessageDialog(new JFrame(), "Preencha com um código válido!", "Mensagem", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        cod = Integer.parseInt(codigo);
-        
-        for( i=0; i < total; i++ ) {
-            if ( SistemaCatalogoFilmes.filmes.get(i).getCodigo() == cod  ) {
-                indice = i;
-                break;
-            }
-        }
-        
-        if ( indice == -1 ) {
-            JOptionPane.showMessageDialog(this, "Filme não encontrado!");
-            this.dispose();
-            return;
-        }
-        
-        // Carrega dados do Filme para tela
-        filme = SistemaCatalogoFilmes.filmes.get(indice);
-        lblCodigo.setText( String.valueOf( filme.getCodigo() ));
-        lblNome.setText(filme.getNome());
-        lblDataLancamento.setText(filme.getDataLacamento());
-        lblDataDvd.setText(filme.getDataDvd());
-        lblUrl.setText(filme.getUrl());
-        
-        lblCategorias.setText("");
-        for ( i=0; i < filme.getCategorias().size(); i++) {
-            lblCategorias.setText(lblCategorias.getText() + filme.getCategorias().get(i).getNome()  + "   ");
-        }
-        
-        // Verifica se o usuário logado já avaliou o filme exibido
-        if ( SistemaCatalogoFilmes.usuarioLogado != null ) {
-            if ( SistemaCatalogoFilmes.usuarioLogado.jaAssistiu(filme) != null ) {
-                btnAvaliacao.setText("Alterar nota!");
-                avaliado = true;
-            } else {
-                btnAvaliacao.setText("Avaliar!");
-                avaliado = false;
-            }
-        }
-        
-        atualizarTabela();
-        
     }
     
     /**
@@ -103,19 +37,19 @@ public class frmVerFilme extends javax.swing.JFrame {
     private void atualizarTabela() {
         String colunas[] = { "Nome", "Nota" };
         String dados[][];
-        ArrayList<Usuario> temp = new ArrayList<>();
+        ArrayList<Nota> temp = new ArrayList<>();
         int i;
         
-        for (i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
-            if ( SistemaCatalogoFilmes.usuarios.get(i).jaAssistiu(filme) != null ) {
-                temp.add(SistemaCatalogoFilmes.usuarios.get(i));
+        for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().equals(filme) ) {
+                temp.add( SistemaCatalogoFilmes.bancoNotas.get(i) );
             }             
         }
         
         dados = new String[temp.size()][colunas.length];
         for (i=0; i < temp.size(); i++ ) {
-            dados[i][0] = temp.get(i).getNome();
-            dados[i][1] = String.valueOf( temp.get(i).jaAssistiu(filme).getNota() );
+            dados[i][0] = temp.get(i).getUsuario().getNome();
+            dados[i][1] = String.valueOf( temp.get(i).getNota() );
         }
             
         tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
@@ -169,6 +103,9 @@ public class frmVerFilme extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -294,7 +231,7 @@ public class frmVerFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_formWindowActivated
 
     private void btnAvaliacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvaliacaoActionPerformed
@@ -310,20 +247,112 @@ public class frmVerFilme extends javax.swing.JFrame {
                     JOptionPane.QUESTION_MESSAGE
                 );
         
-        if ( nota == "" ) {
+        if ( nota.isEmpty() ) {
             this.dispose();
             return;
         }
         
-        if ( nota.isEmpty() || !nota.matches("[1-5]{"+nota.length()+"}") ) {
+        if ( !nota.matches("[1-5]{"+nota.length()+"}") ) {
             JOptionPane.showMessageDialog(new JFrame(), "Preencha com uma nota válida!", "Mensagem", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        SistemaCatalogoFilmes.usuarioLogado.avaliarFilme(filme, Integer.parseInt(nota));
+        Nota n;
+        if ( avaliado == false ) {
+            n = new Nota(filme, SistemaCatalogoFilmes.usuarioLogado, Integer.parseInt(nota));
+            SistemaCatalogoFilmes.bancoNotas.add( n );
+        } else {
+            int i;
+            for ( i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+                n = SistemaCatalogoFilmes.bancoNotas.get(i);
+                if ( n.getUsuario().equals(SistemaCatalogoFilmes.usuarioLogado) ) {
+                    if ( n.getFilme().equals(filme) ) {
+                        n.alterarNota(Integer.parseInt(nota)); 
+                        this.nota = n;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        btnAvaliacao.setText("Alterar nota!");
+        avaliado = true;
         
         atualizarTabela();
     }//GEN-LAST:event_btnAvaliacaoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        String codigo;
+        int cod;
+        
+        codigo = (String)JOptionPane.showInputDialog(
+                    new JFrame(),
+                    "Informe o código do filme que deseja ver",
+                    "Exibição de filme",
+                    JOptionPane.QUESTION_MESSAGE
+                );
+        
+        if ( codigo == null || codigo.isEmpty() ) {
+            this.dispose();
+            return;
+        }
+        
+        // Procurar o filme
+        int total = SistemaCatalogoFilmes.filmes.size();
+        indice = -1;
+        int i;
+        
+        if ( codigo.isEmpty() || !codigo.matches("[0-9]{"+codigo.length()+"}") ) {
+            JOptionPane.showMessageDialog(new JFrame(), "Preencha com um código válido!", "Mensagem", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        cod = Integer.parseInt(codigo);
+        
+        for( i=0; i < total; i++ ) {
+            if ( SistemaCatalogoFilmes.filmes.get(i).getCodigo() == cod  ) {
+                indice = i;
+                break;
+            }
+        }
+        
+        if ( indice == -1 ) {
+            JOptionPane.showMessageDialog(this, "Filme não encontrado!");
+            this.dispose();
+            return;
+        }
+        
+        // Carrega dados do Filme para tela
+        filme = SistemaCatalogoFilmes.filmes.get(indice);
+        lblCodigo.setText( String.valueOf( filme.getCodigo() ));
+        lblNome.setText(filme.getNome());
+        lblDataLancamento.setText(filme.getDataLacamento());
+        lblDataDvd.setText(filme.getDataDvd());
+        lblUrl.setText(filme.getUrl());
+        
+        lblCategorias.setText("");
+        for ( i=0; i < filme.getCategorias().size(); i++) {
+            lblCategorias.setText(lblCategorias.getText() + filme.getCategorias().get(i).getNome()  + "   ");
+        }
+        
+        // Verifica se o usuário logado já avaliou o filme exibido
+        for ( i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            Nota n = SistemaCatalogoFilmes.bancoNotas.get(i);
+            if ( n.getUsuario().equals(SistemaCatalogoFilmes.usuarioLogado) ) {
+                if ( n.getFilme().equals(filme) ) {
+                    btnAvaliacao.setText("Alterar nota!");
+                    avaliado = true;
+                    this.nota = n;
+                } else {
+                    btnAvaliacao.setText("Avaliar!");
+                    avaliado = false;
+                    this.nota = null;
+                }
+            }
+        }
+        
+        atualizarTabela();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

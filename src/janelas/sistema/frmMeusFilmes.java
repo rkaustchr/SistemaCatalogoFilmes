@@ -29,10 +29,12 @@ public class frmMeusFilmes extends javax.swing.JFrame {
         String dados[][];
         int i;
         
-        dados = new String[SistemaCatalogoFilmes.usuarioLogado.getTotalDeAvaliacoes()][colunas.length];
-        for (i=0; i < SistemaCatalogoFilmes.usuarioLogado.getTotalDeAvaliacoes(); i++ ) {
-            dados[i][0] = SistemaCatalogoFilmes.usuarioLogado.getNotas().get(i).getFilme().getNome();
-            dados[i][1] = String.valueOf( SistemaCatalogoFilmes.usuarioLogado.getNotas().get(i).getNota() );
+        dados = new String[SistemaCatalogoFilmes.filmes.size()][colunas.length];
+        for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario().equals( SistemaCatalogoFilmes.usuarioLogado ) ) {
+                dados[i][0] = SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().getNome();
+                dados[i][1] = String.valueOf( SistemaCatalogoFilmes.bancoNotas.get(i).getNota() );
+            }
         }
             
         tblFilmes.setModel(new javax.swing.table.DefaultTableModel(

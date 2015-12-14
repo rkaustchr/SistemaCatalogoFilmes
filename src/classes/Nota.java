@@ -11,10 +11,12 @@ package classes;
  */
 public class Nota {
     private Filme filme;
+    private Usuario usuario;
     private int nota;
     
-    public Nota(Filme filme, int nota) {
+    public Nota(Filme filme, Usuario usuario, int nota) {
         this.filme = filme;
+        this.usuario = usuario;
         this.nota = nota;
     }
     
@@ -24,6 +26,10 @@ public class Nota {
     
     public Filme getFilme() {
         return this.filme;
+    }
+    
+    public Usuario getUsuario() {
+        return this.usuario;
     }
     
     public int getNota() {

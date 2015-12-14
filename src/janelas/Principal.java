@@ -8,12 +8,16 @@ package janelas;
 import classes.Usuario;
 import janelas.filme.frmCadastarFilme;
 import janelas.filme.frmListarFilmes;
+import janelas.filme.frmMelhoresFilmes;
 import janelas.filme.frmVerFilme;
 import janelas.sistema.frmMeusFilmes;
 import janelas.usuario.frmAlterarUsuario;
 import janelas.usuario.frmCadastrarUsuario;
 import janelas.usuario.frmListarUsuarios;
 import janelas.usuario.frmVerUsuario;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 import javafx.application.Application;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -296,8 +300,14 @@ public class Principal extends javax.swing.JFrame {
         
         int i;
         int cont = 0;
-        for( i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++ ) {
-            if ( SistemaCatalogoFilmes.usuarios.get(i).getTotalDeAvaliacoes() == 0 ) {
+        ArrayList<Usuario> temp = new ArrayList<>(); 
+        for( i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            temp.remove(SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario());
+            temp.add(SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario());
+        }
+        
+        for ( i=0; i < SistemaCatalogoFilmes.usuarios.size(); i++) {
+            if (  !temp.contains( SistemaCatalogoFilmes.usuarios.get(i) ) ) {
                 Usuario u = SistemaCatalogoFilmes.usuarios.remove(i);
                 i--;
                 
@@ -317,7 +327,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
+        JFrame frmMelhoresFilmes = new frmMelhoresFilmes();
+        frmMelhoresFilmes.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     /**
