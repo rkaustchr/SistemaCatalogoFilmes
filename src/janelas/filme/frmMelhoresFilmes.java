@@ -38,11 +38,11 @@ public class frmMelhoresFilmes extends javax.swing.JFrame {
                 hmFilmes.put(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme(), nota);
             }
             
-            nota = hmFilmes.get(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme());
+            nota = hmFilmes.remove(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme());
             nota[0] += 1;
             nota[1] += SistemaCatalogoFilmes.bancoNotas.get(i).getNota();
             
-            hmFilmes.replace(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme(), nota);
+            hmFilmes.put(SistemaCatalogoFilmes.bancoNotas.get(i).getFilme(), nota);
         }
             
         // Calcula as médias e separo os melhores avaliados
@@ -116,6 +116,7 @@ public class frmMelhoresFilmes extends javax.swing.JFrame {
         tblFilmes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Melhores Filmes");
 
         tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -23,7 +23,7 @@ public class frmVerUsuario extends javax.swing.JFrame {
     public frmVerUsuario() {
         initComponents();
         
-        String nome;
+        String nome = "";
         
         nome = (String)JOptionPane.showInputDialog(
                     new JFrame(),
@@ -32,7 +32,7 @@ public class frmVerUsuario extends javax.swing.JFrame {
                     JOptionPane.QUESTION_MESSAGE
                 );
         
-        if ( nome == "" ) {
+        if ( nome == null || nome.isEmpty() || nome.equals("") ) {
             this.dispose();
             return;
         }
@@ -85,6 +85,7 @@ public class frmVerUsuario extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Ver Usuários");
 
         jLabel2.setText("Gênero");
 

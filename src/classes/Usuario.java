@@ -5,20 +5,20 @@
  */
 package classes;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Admin
  */
 public class Usuario {
+    private int codigo;
     private String nome;
     private int idade;
     private String genero;
     private String ocupacao;
     private String cep;
     
-    public Usuario(String nome, int idade, String genero, String ocupacao, String cep ) {
+    public Usuario(int codigo, String nome, int idade, String genero, String ocupacao, String cep ) {
+        this.codigo = codigo;
         this.nome = nome;
         this.idade = idade;
         this.genero = genero;

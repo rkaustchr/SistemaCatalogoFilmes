@@ -83,6 +83,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Alterar Usuário");
 
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
         cmbGenero.setEnabled(false);

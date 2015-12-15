@@ -38,6 +38,7 @@ public class frmVerFilme extends javax.swing.JFrame {
         String colunas[] = { "Nome", "Nota" };
         String dados[][];
         ArrayList<Nota> temp = new ArrayList<>();
+        float media = 0;
         int i;
         
         for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
@@ -50,7 +51,13 @@ public class frmVerFilme extends javax.swing.JFrame {
         for (i=0; i < temp.size(); i++ ) {
             dados[i][0] = temp.get(i).getUsuario().getNome();
             dados[i][1] = String.valueOf( temp.get(i).getNota() );
+            media += temp.get(i).getNota();
         }
+        
+        if ( temp.size() > 0 )
+            lblNota.setText( String.valueOf( media / (float) temp.size()) );
+        else
+            lblNota.setText( "--" );
             
         tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
             dados,
@@ -85,6 +92,7 @@ public class frmVerFilme extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEspectadores = new javax.swing.JTable();
         btnAvaliacao = new javax.swing.JButton();
+        lblNota = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,6 +108,7 @@ public class frmVerFilme extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Ver Filme");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -155,12 +164,15 @@ public class frmVerFilme extends javax.swing.JFrame {
             }
         });
 
+        lblNota.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblNota.setText("Nota");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -177,32 +189,31 @@ public class frmVerFilme extends javax.swing.JFrame {
                             .addComponent(lblDataDvd)
                             .addComponent(lblUrl)
                             .addComponent(lblCategorias)
+                            .addComponent(lblNome)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblCodigo)
-                                    .addComponent(lblNome))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblCodigo)
+                                .addGap(84, 84, 84)
                                 .addComponent(btnAvaliacao)
-                                .addGap(8, 8, 8))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNota))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(lblCodigo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lblNome)))
-                    .addComponent(btnAvaliacao))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblCodigo)
+                    .addComponent(btnAvaliacao)
+                    .addComponent(lblNota))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblNome))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -223,7 +234,7 @@ public class frmVerFilme extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(635, 374));
@@ -406,6 +417,7 @@ public class frmVerFilme extends javax.swing.JFrame {
     private javax.swing.JLabel lblDataDvd;
     private javax.swing.JLabel lblDataLancamento;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblNota;
     private javax.swing.JLabel lblUrl;
     private javax.swing.JTable tblEspectadores;
     // End of variables declaration//GEN-END:variables

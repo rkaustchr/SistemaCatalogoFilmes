@@ -30,10 +30,12 @@ public class frmMeusFilmes extends javax.swing.JFrame {
         int i;
         
         dados = new String[SistemaCatalogoFilmes.filmes.size()][colunas.length];
+        int k = 0;
         for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
             if ( SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario().equals( SistemaCatalogoFilmes.usuarioLogado ) ) {
-                dados[i][0] = SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().getNome();
-                dados[i][1] = String.valueOf( SistemaCatalogoFilmes.bancoNotas.get(i).getNota() );
+                dados[k][0] = SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().getNome();
+                dados[k][1] = String.valueOf( SistemaCatalogoFilmes.bancoNotas.get(i).getNota() );
+                k++;
             }
         }
             
@@ -56,6 +58,7 @@ public class frmMeusFilmes extends javax.swing.JFrame {
         tblFilmes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Minhas Avaliações");
 
         tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,8 +79,8 @@ public class frmMeusFilmes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

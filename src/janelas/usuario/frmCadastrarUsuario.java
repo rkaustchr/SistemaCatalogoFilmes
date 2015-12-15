@@ -45,6 +45,7 @@ public class frmCadastrarUsuario extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Cadastrar Usuário");
 
         jLabel1.setText("Nome");
 
@@ -150,6 +151,7 @@ public class frmCadastrarUsuario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         SistemaCatalogoFilmes.usuarios.add( 
                 new Usuario(
+                        (int)(Math.random() * 1000),
                         txtNome.getText(), 
                         Integer.parseInt( txtIdade.getText() ), 
                         String.valueOf(cmbGenero.getSelectedItem()),

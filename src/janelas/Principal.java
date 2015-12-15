@@ -11,14 +11,12 @@ import janelas.filme.frmListarFilmes;
 import janelas.filme.frmMelhoresFilmes;
 import janelas.filme.frmVerFilme;
 import janelas.sistema.frmMeusFilmes;
+import janelas.sistema.frmRecomendacoes;
 import janelas.usuario.frmAlterarUsuario;
 import janelas.usuario.frmCadastrarUsuario;
 import janelas.usuario.frmListarUsuarios;
 import janelas.usuario.frmVerUsuario;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.TreeSet;
-import javafx.application.Application;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sistemacatalogofilmes.SistemaCatalogoFilmes;
@@ -70,6 +68,11 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Catálogo de Filmes (v1.0)");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Bem Vindo ao Sistema Recomendador de Filmes!");
 
@@ -97,6 +100,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem11);
 
         jMenuItem12.setText("Ver recomendações");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem12);
         jMenu1.add(jSeparator2);
 
@@ -206,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblUsuarioLogado)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +277,7 @@ public class Principal extends javax.swing.JFrame {
         
         nome = (String)JOptionPane.showInputDialog(
                     new JFrame(),
-                    "Informe o nome do usuaário que deseja fazer login",
+                    "Informe o nome do usuário que deseja fazer login",
                     "Login",
                     JOptionPane.INFORMATION_MESSAGE
                 );
@@ -330,6 +338,16 @@ public class Principal extends javax.swing.JFrame {
         JFrame frmMelhoresFilmes = new frmMelhoresFilmes();
         frmMelhoresFilmes.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        JFrame frmRecomendacoes = new frmRecomendacoes();
+        frmRecomendacoes.setVisible(true);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        JFrame frmLoading = new frmLoading();
+        frmLoading.setVisible(true);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

@@ -41,10 +41,11 @@ public class frmRecomendacoes extends javax.swing.JFrame {
         tblRecomendacao = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbmPopular = new javax.swing.JTable();
+        tblPopular = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Sistema Catálogo de Filmes (v1.0) - Recomendações");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -68,7 +69,7 @@ public class frmRecomendacoes extends javax.swing.JFrame {
 
         jLabel2.setText("Populares entre os usuários:");
 
-        tbmPopular.setModel(new javax.swing.table.DefaultTableModel(
+        tblPopular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -79,7 +80,7 @@ public class frmRecomendacoes extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tbmPopular);
+        jScrollPane2.setViewportView(tblPopular);
 
         jButton1.setText("Ok");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -157,7 +158,7 @@ public class frmRecomendacoes extends javax.swing.JFrame {
                 int j;
                 for ( j=0; j < nota.getFilme().getCategorias().size(); j++) {
                     if ( minhasCategorias.containsKey(nota.getFilme().getCategorias().get(j)) ) {
-                        minhasCategorias.replace(nota.getFilme().getCategorias().get(j), minhasCategorias.get(nota.getFilme().getCategorias().get(j)) + 1);
+                        minhasCategorias.put(nota.getFilme().getCategorias().get(j), minhasCategorias.remove(nota.getFilme().getCategorias().get(j)) + 1);
                     } else {
                         minhasCategorias.put(nota.getFilme().getCategorias().get(j), 1);
                     }
@@ -167,8 +168,8 @@ public class frmRecomendacoes extends javax.swing.JFrame {
             else {
                 // Testa se o filme já está na lista
                 if ( hmFilmesQtd.containsKey(nota.getFilme()) ) {
-                    hmFilmesQtd.replace(nota.getFilme(), hmFilmesQtd.get(nota.getFilme()) + 1);
-                    hmFilmesNotas.replace(nota.getFilme(), hmFilmesNotas.get(nota.getFilme()) + nota.getNota());
+                    hmFilmesQtd.put(nota.getFilme(), hmFilmesQtd.remove(nota.getFilme()) + 1);
+                    hmFilmesNotas.put(nota.getFilme(), hmFilmesNotas.remove(nota.getFilme()) + nota.getNota());
                 } else {
                     hmFilmesQtd.put(nota.getFilme(), 1);
                     hmFilmesNotas.put(nota.getFilme(), nota.getNota());
@@ -180,28 +181,141 @@ public class frmRecomendacoes extends javax.swing.JFrame {
         // Nesse ponto já tenho todas as notas e categorias
         // Calculo as médias
         for ( i=0; i < SistemaCatalogoFilmes.filmes.size(); i++ ) {
-            
+            Filme filme = SistemaCatalogoFilmes.filmes.get(i);
+            if ( hmFilmesNotas.containsKey(filme) ) {
+                hmFilmesMedias.put( filme, hmFilmesNotas.get(filme) / (float) hmFilmesQtd.get(filme) );
+            }
         }
         
-        String colunas[] = { "Código", "Nome", "Média" };
-        String dados[][];
-        ArrayList<Nota> temp = new ArrayList<>();
-        int i;
+        // Removo os filmes que já foram assistidos
+        for ( i=0; i < filmesAssistidos.size(); i++ ) {
+            hmFilmesMedias.remove(filmesAssistidos.get(i));
+        }
         
-        for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
-            if ( SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().equals(filme) ) {
-                temp.add( SistemaCatalogoFilmes.bancoNotas.get(i) );
+        // Separo a categoria mais vista
+        Categoria categoriaFavorita = null;
+        int tot = 0;
+        for (i=0; i < SistemaCatalogoFilmes.categorias.size(); i++ ) {
+            if ( minhasCategorias.containsKey( SistemaCatalogoFilmes.categorias.get(i) ) ) {
+                if ( minhasCategorias.get(SistemaCatalogoFilmes.categorias.get(i) ) > tot ) {
+                    categoriaFavorita = SistemaCatalogoFilmes.categorias.get(i);
+                    tot = minhasCategorias.get(SistemaCatalogoFilmes.categorias.get(i));
+                }
+            }
+        }
+        
+        // Agora separo os filmes mais bem avaliados na categoria favorita e 
+        // os filmes mais bem avaliados pelo público em geral
+        int MAX_RECOMENDACAO = 10;
+        String mRecomendacao[][] = new String[MAX_RECOMENDACAO][3]; // Cod, Nome, Media
+        String mPopular[][] = new String[MAX_RECOMENDACAO][3];  // Cod, Nome, Media
+        int contRecomendacao = -1;
+        int contPopular = -1;
+        
+        for (i=0; i < SistemaCatalogoFilmes.filmes.size(); i++ ) {
+            Filme filme = SistemaCatalogoFilmes.filmes.get(i);
+            if ( hmFilmesMedias.containsKey(filme) ) {
+                // Testo se está na recomendacao
+                if ( filme.getCategorias().contains(categoriaFavorita) ) {
+                    if ( contRecomendacao < 0 ) {
+                        mRecomendacao[0][0] = String.valueOf( filme.getCodigo() );
+                        mRecomendacao[0][1] = filme.getNome();
+                        mRecomendacao[0][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                        contRecomendacao = 0;
+                    } else if ( contRecomendacao+1 < MAX_RECOMENDACAO )  {
+                        contRecomendacao++;
+                        mRecomendacao[contRecomendacao][0] = String.valueOf( filme.getCodigo() );
+                        mRecomendacao[contRecomendacao][1] = filme.getNome();
+                        mRecomendacao[contRecomendacao][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                    } else {
+                        if ( hmFilmesMedias.get(filme) > Float.parseFloat( mRecomendacao[contRecomendacao][2] ) ) {
+                            mRecomendacao[contRecomendacao][0] = String.valueOf( filme.getCodigo() );
+                            mRecomendacao[contRecomendacao][1] = filme.getNome();
+                            mRecomendacao[contRecomendacao][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                        }
+                    }
+
+                    // Insertion Sort,
+                    int j;
+                    for ( j = contRecomendacao; j > 0; j-- ) {
+                        if ( Float.parseFloat( mRecomendacao[j][2] ) >  Float.parseFloat( mRecomendacao[j-1][2] )  ) {
+                            String aux;
+                            
+                            // Codigo
+                            aux = mRecomendacao[j][0];
+                            mRecomendacao[j][0] = mRecomendacao[j-1][0];
+                            mRecomendacao[j-1][0] = aux;
+                            
+                            // Nomes
+                            aux = mRecomendacao[j][1];
+                            mRecomendacao[j][1] = mRecomendacao[j-1][1];
+                            mRecomendacao[j-1][1] = aux;
+
+                            // Medias
+                            aux = mRecomendacao[j][2];
+                            mRecomendacao[j][2] = mRecomendacao[j-1][2];
+                            mRecomendacao[j-1][2] = aux;
+                        }
+                    }
+                }
+                // Se não está nas recomendações testo se está nos
+                // mais bem avaliados
+                else {
+                    if ( contPopular < 0 ) {
+                        mPopular[0][0] = String.valueOf( filme.getCodigo() );
+                        mPopular[0][1] = filme.getNome();
+                        mPopular[0][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                        contPopular = 0;
+                    } else if ( contPopular+1 < MAX_RECOMENDACAO )  {
+                        contPopular++;
+                        mPopular[contPopular][0] = String.valueOf( filme.getCodigo() );
+                        mPopular[contPopular][1] = filme.getNome();
+                        mPopular[contPopular][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                    } else {
+                        if ( hmFilmesMedias.get(filme) > Float.parseFloat( mPopular[contPopular][2] ) ) {
+                            mPopular[contPopular][0] = String.valueOf( filme.getCodigo() );
+                            mPopular[contPopular][1] = filme.getNome();
+                            mPopular[contPopular][2] = String.valueOf( hmFilmesMedias.get(filme) );
+                        }
+                    }
+
+                    // Insertion Sort,
+                    int j;
+                    for ( j = contPopular; j > 0; j-- ) {
+                        if ( Float.parseFloat( mPopular[j][2] ) >  Float.parseFloat( mPopular[j-1][2] )  ) {
+                            String aux;
+                            
+                            // Codigo
+                            aux = mPopular[j][0];
+                            mPopular[j][0] = mPopular[j-1][0];
+                            mPopular[j-1][0] = aux;
+                            
+                            // Nomes
+                            aux = mPopular[j][1];
+                            mPopular[j][1] = mPopular[j-1][1];
+                            mPopular[j-1][1] = aux;
+
+                            // Medias
+                            aux = mPopular[j][2];
+                            mPopular[j][2] = mPopular[j-1][2];
+                            mPopular[j-1][2] = aux;
+                        }
+                    }
+                }
+                
             }             
         }
         
-        dados = new String[temp.size()][colunas.length];
-        for (i=0; i < temp.size(); i++ ) {
-            dados[i][0] = temp.get(i).getUsuario().getNome();
-            dados[i][1] = String.valueOf( temp.get(i).getNota() );
-        }
-            
-        tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
-            dados,
+        
+        // Coloco os dados nas tabelas
+        String colunas[] = { "Código", "Nome", "Média" };    
+        tblRecomendacao.setModel(new javax.swing.table.DefaultTableModel(
+            mRecomendacao,
+            colunas
+        ));
+        
+        tblPopular.setModel(new javax.swing.table.DefaultTableModel(
+            mPopular,
             colunas
         ));
     }//GEN-LAST:event_formWindowOpened
@@ -251,7 +365,7 @@ public class frmRecomendacoes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblPopular;
     private javax.swing.JTable tblRecomendacao;
-    private javax.swing.JTable tbmPopular;
     // End of variables declaration//GEN-END:variables
 }
