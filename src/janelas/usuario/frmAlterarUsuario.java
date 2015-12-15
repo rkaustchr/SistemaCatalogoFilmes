@@ -81,6 +81,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtIdade = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema Catálogo de Filmes (v1.0) - Alterar Usuário");
@@ -119,6 +120,9 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel6.setText("Alteração de usuário");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,7 +133,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(56, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -143,16 +147,23 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
                         .addComponent(txtOcupacao))
                     .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(215, 215, 215)
-                .addComponent(jButton1)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(215, 215, 215)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -174,7 +185,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         setSize(new java.awt.Dimension(525, 297));
@@ -242,6 +253,7 @@ public class frmAlterarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtCep;
     private javax.swing.JTextField txtIdade;
     private javax.swing.JTextField txtNome;

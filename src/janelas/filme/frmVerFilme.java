@@ -7,6 +7,7 @@ package janelas.filme;
 
 import classes.Filme;
 import classes.Nota;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -54,10 +55,12 @@ public class frmVerFilme extends javax.swing.JFrame {
             media += temp.get(i).getNota();
         }
         
-        if ( temp.size() > 0 )
-            lblNota.setText( String.valueOf( media / (float) temp.size()) );
-        else
+        if ( temp.size() > 0 ) {
+            DecimalFormat df = new DecimalFormat("0.00");
+            lblNota.setText( String.valueOf( df.format(media / (float) temp.size()))  + "✰");
+        } else {
             lblNota.setText( "--" );
+        }
             
         tblEspectadores.setModel(new javax.swing.table.DefaultTableModel(
             dados,
@@ -93,6 +96,7 @@ public class frmVerFilme extends javax.swing.JFrame {
         tblEspectadores = new javax.swing.JTable();
         btnAvaliacao = new javax.swing.JButton();
         lblNota = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,20 +171,26 @@ public class frmVerFilme extends javax.swing.JFrame {
         lblNota.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblNota.setText("Nota");
 
+        jLabel8.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel8.setText("Exibição de filme");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addComponent(jLabel1))
                             .addComponent(jLabel2)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
@@ -197,7 +207,7 @@ public class frmVerFilme extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblNota))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(8, 8, 8)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -205,6 +215,8 @@ public class frmVerFilme extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblCodigo)
@@ -237,7 +249,7 @@ public class frmVerFilme extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(635, 374));
+        setSize(new java.awt.Dimension(635, 395));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -409,6 +421,7 @@ public class frmVerFilme extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

@@ -46,6 +46,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblUsuarioLogado = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -74,11 +75,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel1.setText("Bem Vindo ao Sistema Recomendador de Filmes!");
 
         jLabel2.setText("Usuário Logado:");
 
+        lblUsuarioLogado.setFont(new java.awt.Font("Ubuntu", 2, 15)); // NOI18N
         lblUsuarioLogado.setText("----");
+
+        jLabel3.setText("Desenvolvido por: Camilla Magela & Rafael Kaustchr");
 
         jMenu1.setText("Sistema");
 
@@ -207,28 +212,30 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblUsuarioLogado)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblUsuarioLogado))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel3))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lblUsuarioLogado))
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(jLabel3))
         );
 
-        setSize(new java.awt.Dimension(416, 338));
+        setSize(new java.awt.Dimension(585, 247));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -387,6 +394,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

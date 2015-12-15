@@ -80,7 +80,7 @@ public class frmLoading extends javax.swing.JFrame {
                             .addComponent(pgbProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMensagem)))
                     .addComponent(lblPath))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,7 +97,7 @@ public class frmLoading extends javax.swing.JFrame {
                 .addComponent(lblPath))
         );
 
-        setSize(new java.awt.Dimension(410, 232));
+        setSize(new java.awt.Dimension(391, 232));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
