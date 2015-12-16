@@ -11,6 +11,7 @@ import classes.Nota;
 import classes.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 import sistemacatalogofilmes.SistemaCatalogoFilmes;
 
@@ -154,6 +155,11 @@ public class frmRecomendacoes extends javax.swing.JFrame {
         HashMap<Filme, Float> hmFilmesMedias = new HashMap<>();
         ArrayList<Filme> filmesAssistidos = new ArrayList<>();
         Usuario eu = SistemaCatalogoFilmes.usuarioLogado;
+        
+        if ( SistemaCatalogoFilmes.usuarioLogado == null ) {
+            JOptionPane.showMessageDialog(this, "Faça o login para continuar!");
+            this.dispose();
+        }
         
         int i;
         for ( i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++) {

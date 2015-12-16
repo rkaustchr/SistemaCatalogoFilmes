@@ -19,30 +19,6 @@ public class frmMeusFilmes extends javax.swing.JFrame {
      */
     public frmMeusFilmes() {
         initComponents();
-        
-        if ( SistemaCatalogoFilmes.usuarioLogado == null ) {
-            JOptionPane.showMessageDialog(this, "Faça o login para continuar!");
-            this.dispose();
-        }
-        
-        String colunas[] = { "Filme", "Nota" };
-        String dados[][];
-        int i;
-        
-        dados = new String[SistemaCatalogoFilmes.filmes.size()][colunas.length];
-        int k = 0;
-        for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
-            if ( SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario().equals( SistemaCatalogoFilmes.usuarioLogado ) ) {
-                dados[k][0] = SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().getNome();
-                dados[k][1] = String.valueOf( SistemaCatalogoFilmes.bancoNotas.get(i).getNota() );
-                k++;
-            }
-        }
-            
-        tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
-            dados,
-            colunas
-        ));
     }
 
     /**
@@ -61,6 +37,11 @@ public class frmMeusFilmes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema Catálogo de Filmes (v1.0) - Minhas Avaliações");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -121,6 +102,32 @@ public class frmMeusFilmes extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if ( SistemaCatalogoFilmes.usuarioLogado == null ) {
+            JOptionPane.showMessageDialog(this, "Faça o login para continuar!");
+            this.dispose();
+        }
+        
+        String colunas[] = { "Filme", "Nota" };
+        String dados[][];
+        int i;
+        
+        dados = new String[SistemaCatalogoFilmes.filmes.size()][colunas.length];
+        int k = 0;
+        for (i=0; i < SistemaCatalogoFilmes.bancoNotas.size(); i++ ) {
+            if ( SistemaCatalogoFilmes.bancoNotas.get(i).getUsuario().equals( SistemaCatalogoFilmes.usuarioLogado ) ) {
+                dados[k][0] = SistemaCatalogoFilmes.bancoNotas.get(i).getFilme().getNome();
+                dados[k][1] = String.valueOf( SistemaCatalogoFilmes.bancoNotas.get(i).getNota() );
+                k++;
+            }
+        }
+            
+        tblFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            dados,
+            colunas
+        ));
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
